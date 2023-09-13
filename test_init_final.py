@@ -3800,21 +3800,20 @@ class mainCog(commands.Cog):
 		input_data_list = args.split()
 		result_boss_name : list = []
 
-		if len(input_data_list) < 1:
+		if len(input_data_list) < 0:
 			return await ctx.send(f"```[{command[45][0]}] [시간(00:00)] ... 양식으로 입력해주세요```", tts=False)
 
 		try:
 			input_hour = int(input_data_list[0][:input_data_list[0].find(":")])
 			input_minute = int(input_data_list[0][input_data_list[0].find(":")+1:])
-			input_delta_time = int(input_data_list[1])
 			input_delta_time_8 = 8
 			input_delta_time_14 = 14
 		except:
 			return await ctx.send(f"시간 및 추가시간은 숫자로 입력해주세요. ")
 
-		boss_name_list : list = ["개미 돌크 코어 릴리 코룬 사무엘 거울 히실 란도르 발락 사이락스 드비 오르펜 올크스 라하 글라키 플린트 카브 안드 타나 하프 나이 모데 피닉스 노르무스 실라 무프 우칸바"]
-		boss_name_list_8 : list = ["개미 돌크 코어 릴리 코룬 사무엘 거울 히실 란도르 발락 사이락스"]
-		boss_name_list_14 : list = ["드비 오르펜 올크스 라하 글라키 플린트 카브 안드 타나 하프 나이 모데 피닉스 노르무스 실라 무프 우칸바"]
+		boss_name_list : list = ["개미", "돌크", "코어", "릴리", "코룬", "사무엘", "거울", "히실", "란도르", "발락", "사이락스", "드비", "오르펜", "올크스", "라하", "글라키", "플린트", "카브", "안드", "타나", "하프", "나이", "모데", "피닉스", "노르무스", "실라", "무프", "우칸바"]
+		boss_name_list_8 : list = ["개미", "돌크", "코어", "릴리", "코룬", "사무엘", "거울", "히실", "란도르", "발락", "사이락스"]
+		boss_name_list_14 : list = ["드비", "오르펜", "올크스", "라하", "글라키", "플린트", "카브", "안드", "타나", "하프", "나이", "모데", "피닉스", "노르무스", "실라", "무프", "우칸바"]
 
 		if input_hour > 23 or input_hour < 0 or input_minute > 60:
 			return await ctx.send(f"올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요.")
