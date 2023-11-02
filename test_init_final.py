@@ -3732,7 +3732,7 @@ class mainCog(commands.Cog):
 			return
 			
 		if not args:
-			return await ctx.send('```보스타임 정보를 입력해주세요```', tts=False)
+			return await ctx.send('```보스타임 정 보를 입력해주세요```', tts=False)
 
 		boss_data_list : list = args.split("\n")
 		boss_data_dict : dict = {}
