@@ -3672,7 +3672,7 @@ class mainCog(commands.Cog):
 				tmp_boss_name = tmp_boss_name[:tmp_boss_name.find(" ")].strip()
 			tmp_boss_time = boss_data[:boss_data.rfind(" : ")].strip()
 			try:
-				if tmp_boss_time.find(':') != -1 :
+				if boss_data[:boss_data.rfind(" : ")].strip().find(':') != -1 :
 					if list(tmp_boss_time).count(":") > 1:
 						tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
 						tmp_minute = int(tmp_boss_time[tmp_boss_time.find(":")+1:tmp_boss_time.rfind(":")])
@@ -3685,7 +3685,6 @@ class mainCog(commands.Cog):
 						return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!.")
 				else:
 					now2 = datetime.datetime.now()
-					
 					tmp_hour = now.hour
 					tmp_minute = now.minute
 					tmp_second = now.second
