@@ -3672,7 +3672,7 @@ class mainCog(commands.Cog):
 				tmp_boss_name = tmp_boss_name[:tmp_boss_name.find(" ")].strip()
 			tmp_boss_time = boss_data[:boss_data.rfind(" : ")].strip()
 			try:
-				if list(tmp_boss_time).count(":") > 0:
+				#if list(tmp_boss_time).count(":") > 0:
 					if list(tmp_boss_time).count(":") > 1:
 						tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
 						tmp_minute = int(tmp_boss_time[tmp_boss_time.find(":")+1:tmp_boss_time.rfind(":")])
@@ -3683,14 +3683,19 @@ class mainCog(commands.Cog):
 						tmp_second = 0
 					if tmp_hour > 23 or tmp_hour < 0 or tmp_minute > 60 or tmp_second > 60:
 						return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!.")
-				else:
-					now2 = datetime.datetime.now()
+				#else:
+				#	now2 = datetime.datetime.now()
+					
+				#	tmp_hour = now.hour
+				#	tmp_minute = now.minute
+				#	tmp_second = now.second
+			except:
+			now2 = datetime.datetime.now()
 					
 					tmp_hour = now.hour
 					tmp_minute = now.minute
 					tmp_second = now.second
-			except:
-				return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!!. ")
+				#return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!!. ")
 
 			if "@" != boss_data[0]:
 				boss_data_dict[tmp_boss_name] = {"hour" : tmp_hour, "minute" : tmp_minute, "second" : tmp_second}
