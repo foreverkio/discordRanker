@@ -3672,26 +3672,18 @@ class mainCog(commands.Cog):
 				tmp_boss_name = tmp_boss_name[:tmp_boss_name.find(" ")].strip()
 			tmp_boss_time = boss_data[:boss_data.rfind(" : ")].strip()
 			try:
-								print("HOOOOO ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
-				if tmp_boss_name.find(':') != -1 :
-					if list(tmp_boss_time).count(":") > 1:
-						tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
-						tmp_minute = int(tmp_boss_time[tmp_boss_time.find(":")+1:tmp_boss_time.rfind(":")])
-						tmp_second = int(tmp_boss_time[tmp_boss_time.rfind(":")+1:])
-					else:
-						tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
-						tmp_minute = int(tmp_boss_time[tmp_boss_time.rfind(":")+1:])
-						tmp_second = 0
-					if tmp_hour > 23 or tmp_hour < 0 or tmp_minute > 60 or tmp_second > 60:
-						return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!.")
+				if list(tmp_boss_time).count(":") > 1:
+					tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
+					tmp_minute = int(tmp_boss_time[tmp_boss_time.find(":")+1:tmp_boss_time.rfind(":")])
+					tmp_second = int(tmp_boss_time[tmp_boss_time.rfind(":")+1:])
 				else:
-					print("HOOOOO ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
-					now2 = datetime.datetime.now()
-					tmp_hour = now.hour
-					tmp_minute = now.minute
-					tmp_second = now.second
+					tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
+					tmp_minute = int(tmp_boss_time[tmp_boss_time.rfind(":")+1:])
+					tmp_second = 0
+				if tmp_hour > 23 or tmp_hour < 0 or tmp_minute > 60 or tmp_second > 60:
+					return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요.")
 			except:
-				return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!!. ")
+				return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요. ")
 
 			if "@" != boss_data[0]:
 				boss_data_dict[tmp_boss_name] = {"hour" : tmp_hour, "minute" : tmp_minute, "second" : tmp_second}
@@ -3795,30 +3787,33 @@ class mainCog(commands.Cog):
 
 		return await ctx.send(f"```[{', '.join(result_boss_name)}] 보스 [예상등록]이 완료되었습니다. [{command[22][0]}]으로 등록시간을 확인해보세요```", tts=False)
 
-	################ 추가등록 ################ 
+################ 추가등록 ################ 
 	@commands.command(name=command[45][0], aliases=command[45][1:])
 	async def multi_boss_delta_add(self, ctx, *, args : str = None):
 		if ctx.message.channel.id != basicSetting[7]:
 			return
 
 		if not args:
-			return await ctx.send(f"```[{command[45][0]}] [시간(00:00)] [추가시간(숫자)] [보스명1] [보스명2] [보스명3] ... 양식으로 입력해주세요```", tts=False)
+			return await ctx.send(f"```[{command[45][0]}] [시간(00:00)] ... 양식으로 입력해주세요```", tts=False)
 
 		input_data_list : list = []
 		input_data_list = args.split()
 		result_boss_name : list = []
 
-		if len(input_data_list) < 3:
-			return await ctx.send(f"```[{command[45][0]}] [시간(00:00)] [추가시간(숫자)] [보스명1] [보스명2] [보스명3] ... 양식으로 입력해주세요```", tts=False)
+		if len(input_data_list) < 0:
+			return await ctx.send(f"```[{command[45][0]}] [시간(00:00)] ... 양식으로 입력해주세요```", tts=False)
 
 		try:
 			input_hour = int(input_data_list[0][:input_data_list[0].find(":")])
 			input_minute = int(input_data_list[0][input_data_list[0].find(":")+1:])
-			input_delta_time = int(input_data_list[1])
+			input_delta_time_8 = 8
+			input_delta_time_14 = 14
 		except:
 			return await ctx.send(f"시간 및 추가시간은 숫자로 입력해주세요. ")
 
-		boss_name_list : list = input_data_list[2:]
+		boss_name_list : list = ["개미", "돌크", "코어", "릴리", "코룬", "사무엘", "거울", "히실", "란도르", "발락", "사이락스", "드비", "오르펜", "올크스", "라하", "글라키", "플린트", "카브", "안드", "타나", "하프", "나이", "모데", "피닉스", "노르무스", "실라", "무프", "우칸바"]
+		boss_name_list_8 : list = ["개미", "돌크", "코어", "릴리", "코룬", "사무엘", "거울", "히실", "란도르", "발락", "사이락스"]
+		boss_name_list_14 : list = ["드비", "오르펜", "올크스", "라하", "글라키", "플린트", "카브", "안드", "타나", "하프", "나이", "모데", "피닉스", "노르무스", "실라", "무프", "우칸바"]
 
 		if input_hour > 23 or input_hour < 0 or input_minute > 60:
 			return await ctx.send(f"올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요.")
@@ -3828,8 +3823,12 @@ class mainCog(commands.Cog):
 				curr_now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
 				now2 = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
 				tmp_now = datetime.datetime.now() + datetime.timedelta(hours = int(basicSetting[0]))
-				tmp_now = tmp_now.replace(hour=int(input_hour), minute=int(input_minute), second=0) + datetime.timedelta(hours=int(input_delta_time))
-					
+
+				if bossData[i][0] in boss_name_list_8:
+					tmp_now = tmp_now.replace(hour=int(input_hour), minute=int(input_minute), second=0) + datetime.timedelta(hours=int(input_delta_time_8))
+				elif bossData[i][0] in boss_name_list_14:
+					tmp_now = tmp_now.replace(hour=int(input_hour), minute=int(input_minute), second=0) + datetime.timedelta(hours=int(input_delta_time_14))
+
 				bossFlag[i] = False
 				bossFlag0[i] = False
 				bossMungFlag[i] = False
@@ -3857,7 +3856,7 @@ class mainCog(commands.Cog):
 				result_boss_name.append(bossData[i][0])
 					
 		return await ctx.send(f"```[{', '.join(list(result_boss_name))}] 보스 [추가등록]이 완료되었습니다. [{command[22][0]}]으로 등록시간을 확인해보세요```", tts=False)
-
+		
 	################ ?????????????? ################ 
 	@commands.command(name='!오빠')
 	async def brother1_(self, ctx):
