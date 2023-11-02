@@ -3672,7 +3672,7 @@ class mainCog(commands.Cog):
 				tmp_boss_name = tmp_boss_name[:tmp_boss_name.find(" ")].strip()
 			tmp_boss_time = boss_data[:boss_data.rfind(" : ")].strip()
 			try:
-				if boss_data[:boss_data.rfind(" : ")].strip().find(':') != -1 :
+				if tmp_boss_name.find(':') != -1 :
 					if list(tmp_boss_time).count(":") > 1:
 						tmp_hour = int(tmp_boss_time[tmp_boss_time.find(":")-2:tmp_boss_time.find(":")])
 						tmp_minute = int(tmp_boss_time[tmp_boss_time.find(":")+1:tmp_boss_time.rfind(":")])
