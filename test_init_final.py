@@ -3687,9 +3687,9 @@ class mainCog(commands.Cog):
 				else:
 					#print("HOOOOO ") #화면에 봇의 아이디, 닉네임이 출력됩니다.
 					now2 = datetime.datetime.now()
-					tmp_hour = now.hour
-					tmp_minute = now.minute
-					tmp_second = now.second
+					tmp_hour = now2.hour
+					tmp_minute = now2.minute
+					tmp_second = now2.second
 			except:
 				return await ctx.send(f"**[{tmp_boss_name}]**의 올바른 시간(00:00:00 ~ 23:59:59)을 입력해주세요!!. ")
 
